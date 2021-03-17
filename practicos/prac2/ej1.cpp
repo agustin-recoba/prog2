@@ -13,6 +13,16 @@ void insertarOrdenado(float * A, uint n, float e)
     }
 }
 
+void insertarOrdenadoIterativo(float * A, uint n, float e)
+{
+    int i = n;
+    while(i > 0 && A[i] > e) {
+        A[i+1] = A[i];
+        i--;
+    }
+    A[i+1] = e;
+}
+
 void ordenar(float * A, uint n)
 {
     if (n > 1)
