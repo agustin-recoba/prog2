@@ -10,3 +10,7 @@ bool esPolindromeAux(char *string, uint n, uint deep) {
 bool esPolindrome(char *string, uint n){
     return esPolindromeAux(string, n, 0);
 }
+
+int main () {
+    
+}
