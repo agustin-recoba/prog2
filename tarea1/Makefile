@@ -1,6 +1,6 @@
 
 # --------------------------------------------------------------------
-#  Makefile de tarea 12.
+#  Makefile de tarea 1.
 
 #  Laboratorio de Programación 2.
 #  InCo-FIng-UDELAR
