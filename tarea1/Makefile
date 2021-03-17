@@ -86,7 +86,7 @@ $(EJECUTABLE): $(ODIR)/$(PRINCIPAL).o $(OS)
 
 
 # casos de prueba
-CASOS = 01 02 03 esVaciaPila apilar cima desapilar esVaciaCola encolar frente desencolar esClave asociar valor desasociar
+CASOS = esVaciaPila apilar cima desapilar esVaciaCola encolar frente desencolar esClave asociar valor desasociar
 
 # cadena de archivos, con directorio y extensión
 INS=$(CASOS:%=$(TESTDIR)/%.in)
@@ -117,6 +117,20 @@ $(TESTDIR)/%.sal:$(TESTDIR)/%.in
 # En el caso de `diff', si los dos archivos comparados no son iguales,
 # el estado de la salida no es 0 y en ese caso se imprime el mensaje.
 
+
+
+# Test general. Las dependencias son los .diff.
+# Con `find` se encuentran los .diff de tamaño > 0 que están en el directorio
+# $(TESTDIR) y lo asigna a $(LST_ERR).
+# Si el tamaño de $(LST_ERR) no es cero imprime los casos con error.
+# Con `sed` se elimina el nombre de directorio y la extensión.
+testing: $(DIFFS)
+	@LST_ERR=$$(find $(TESTDIR) -name *.diff* -size +0c -print);             \
+	if [ -n "$${LST_ERR}" ];                                                \
+	then                                                                    \
+		echo -- CASOS CON ERRORES --;                                   \
+		echo "$${LST_ERR}" | sed -e 's/$(TESTDIR)\///g' -e 's/.diff//g';\
+	fi
 
 # Genera el entregable.
 ENTREGA=Entrega1.tar.gz
