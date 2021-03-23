@@ -7,3 +7,6 @@ struct nodo {
 };
 typedef nodo *lista;
 
+lista take(int i, lista l) {
+    
+}
