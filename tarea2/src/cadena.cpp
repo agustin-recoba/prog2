@@ -125,7 +125,7 @@ TCadena removerDeCadena(TLocalizador loc, TCadena cad) {
 void imprimirCadena(TCadena cad) {
   TLocalizador p = cad->inicio;
   while (esLocalizador(p)) {
-    printf("%s", infoATexto(n));
+    printf("(%d,%.2f)", natInfo(p->dato), realInfo(p->dato));
     p = p->siguiente;
   }
   if (!esLocalizador(p))
