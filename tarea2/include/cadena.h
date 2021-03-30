@@ -148,7 +148,7 @@ void imprimirCadena(TCadena cad);
 
 /*
   Devuelve el 'TLocalizador' con el que se accede al k-esimo elemento de 'cad'.
-  Si 'k' es 0 o mayor a la cantidad de elementos de 'cad' devuelve un
+  Si 'k' es 0 o mayor a la cantidad de elementos de 'cad', devuelve un
   localizdor  no válido.
   El tiempo de ejecución en el peor caso es O(n), siendo 'n' la cantidad de
   elementos en 'cad'.

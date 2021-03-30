@@ -125,8 +125,11 @@ TCadena removerDeCadena(TLocalizador loc, TCadena cad) {
 void imprimirCadena(TCadena cad) {
   TLocalizador p = cad->inicio;
   while (esLocalizador(p)) {
-    printf("(%d,%.2f)", natInfo(p->dato), realInfo(p->dato));
-    p = p->siguiente;
+    ArregloChars arr;
+    arr = infoATexto(p->dato);
+    printf("%s", arr);
+    delete[] arr;
+    p = siguiente(p, cad);
   }
   if (!esLocalizador(p))
     printf("\n");
@@ -134,11 +137,39 @@ void imprimirCadena(TCadena cad) {
 }
 
 TLocalizador kesimo(nat k, TCadena cad) {
-  return NULL;
+
+  if (k == 0 || esVaciaCadena(cad)) return NULL;
+
+  TLocalizador p = cad->inicio;
+  nat i = 1;
+
+  while (esLocalizador(p) && i < k) {
+    p = p->siguiente;
+    i++;
+  }
+  return i == k ? p : NULL;
 }
 
 TCadena insertarSegmentoDespues(TCadena sgm, TLocalizador loc, TCadena cad) {
-  return NULL;
+  if(!esVaciaCadena(sgm)) {
+    if(esVaciaCadena(cad)) {
+      cad->inicio = sgm->inicio;
+      cad->final = sgm->final;
+    } else {
+      if(esFinalCadena(loc, cad)) {
+        loc->siguiente = sgm->inicio;
+        cad->final = sgm->final;
+        sgm->inicio->anterior = loc;
+      } else {
+        sgm->final->siguiente = loc->siguiente;
+        loc->siguiente->anterior = sgm->final;
+        loc->siguiente = sgm->inicio;
+        sgm->inicio->anterior = loc;
+      }
+    }
+  }
+  delete sgm;
+  return cad;
 }
 
 TCadena copiarSegmento(TLocalizador desde, TLocalizador hasta, TCadena cad) {
@@ -158,11 +189,22 @@ TCadena intercambiar(TLocalizador loc1, TLocalizador loc2, TCadena cad) {
 }
 
 bool localizadorEnCadena(TLocalizador loc, TCadena cad) {
-  return true;
+  TLocalizador p = cad->inicio;
+  while (esLocalizador(p) && p != loc) {
+    p = p->siguiente;
+  }
+  return p != NULL && p == loc;
 }
 
 bool precedeEnCadena(TLocalizador loc1, TLocalizador loc2, TCadena cad) {
-  return false;
+  if(esVaciaCadena(cad) || loc2 == NULL || loc1 == NULL) 
+    return false;
+  else if (loc1 == loc2 && localizadorEnCadena(loc1, cad))
+    return true;
+  while (esLocalizador(loc1) && loc1 != loc2) {
+    loc1 = loc1->siguiente;
+  }
+  return loc1 == loc2;
 }
 
 TLocalizador siguienteClave(nat clave, TLocalizador loc, TCadena cad) {
