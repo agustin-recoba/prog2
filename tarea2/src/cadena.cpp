@@ -18,75 +18,119 @@ struct _rep_cadena {
   TLocalizador final;
 };
 
-bool esLocalizador(TLocalizador loc) { return loc != NULL; }
+bool esLocalizador(TLocalizador loc) { 
+  return loc != NULL; 
+}
 
 TCadena crearCadena() {
   TCadena res = new _rep_cadena;
-  res->inicio = res->final = NULL;
+  res->inicio = NULL;
+  res->final = NULL;
   return res;
 }
 
 void liberarCadena(TCadena cad) {
+  TLocalizador p = cad->final;
+  while (esLocalizador(p) && esLocalizador(p->anterior)) {
+    p = p->anterior;
+    liberarInfo(p->siguiente->dato);
+    delete p->siguiente;
+  }
+  if (esLocalizador(p)) {
+    liberarInfo(p->dato);
+    delete p;
+  }
+  delete cad;
 }
 
 bool esVaciaCadena(TCadena cad) {
+  return cad->inicio == NULL;
 }
 
 TLocalizador inicioCadena(TCadena cad) {
-  /*
-  // versión que sigue la especificación
-    TLocalizador res;
-    if (esVaciaCadena(cad)) {
-      res = NULL;
-    } else {
-      res = cad->inicio;
-    }
-    return res;
-  */
-  
-  // versión conociendo la implementación:
-  // esVaciaCadena(cad) => cad->inicio == NUL
-  assert(!esVaciaCadena(cad) || cad->inicio == NULL);
   return cad->inicio;
 }
 
 TLocalizador finalCadena(TCadena cad) {
-  return NULL;
+  return esVaciaCadena(cad) ? NULL : cad->final;
 }
 
 TInfo infoCadena(TLocalizador loc, TCadena cad) {
-  return NULL;
+  return loc->dato;
 }
 
 TLocalizador siguiente(TLocalizador loc, TCadena cad) {
-  return NULL;
+  return esFinalCadena(loc, cad) ? NULL : loc->siguiente;
 }
 
 TLocalizador anterior(TLocalizador loc, TCadena cad) {
-  return NULL;
+  return esInicioCadena(loc, cad) ? NULL : loc->anterior;
 }
 
 bool esFinalCadena(TLocalizador loc, TCadena cad) {
-  return false;
+  return esVaciaCadena(cad) ? false : cad->final == loc;
 }
 
 bool esInicioCadena(TLocalizador loc, TCadena cad) {
-  return false;
+  return esVaciaCadena(cad) ? false : cad->inicio == loc;
 }
 
 TCadena insertarAlFinal(TInfo i, TCadena cad) {
-  return NULL;
+  TLocalizador nuevo = new nodoCadena;
+  nuevo->dato = i;
+  nuevo->siguiente = NULL;
+  if(esVaciaCadena(cad)) {
+    cad->inicio = nuevo;
+    cad->final = nuevo;
+    nuevo->anterior = NULL;
+    nuevo->siguiente = NULL;
+  } else {
+    nuevo->anterior = cad->final;
+    cad->final = nuevo;
+    nuevo->anterior->siguiente = nuevo;
+  }
+  return cad;
 }
 
 TCadena insertarAntes(TInfo i, TLocalizador loc, TCadena cad) {
-  return NULL;
+  TLocalizador nuevo = new nodoCadena;
+  nuevo->dato = i;
+  nuevo->siguiente = loc;
+  nuevo->anterior = loc->anterior;
+  if (!esLocalizador(loc->anterior)) {
+    cad->inicio = nuevo;
+  } else {
+    loc->anterior->siguiente = nuevo;
+  }
+  loc->anterior = nuevo;
+  return cad;
 }
 
 TCadena removerDeCadena(TLocalizador loc, TCadena cad) {
-  return NULL;
+  if (esLocalizador(loc->anterior)) {
+    loc->anterior->siguiente = loc->siguiente;
+  } else {
+    cad->inicio = loc->siguiente;
+  }
+  if (esLocalizador(loc->siguiente)) {
+    loc->siguiente->anterior = loc->anterior;
+  } else {
+    cad->final = loc->anterior;
+  }
+  liberarInfo(loc->dato);
+  delete loc;
+  return cad;
 }
 
 void imprimirCadena(TCadena cad) {
+  TLocalizador p = cad->inicio;
+  while (esLocalizador(p)) {
+    printf("%s", infoATexto(n));
+    p = p->siguiente;
+  }
+  if (!esLocalizador(p))
+    printf("\n");
+  
 }
 
 TLocalizador kesimo(nat k, TCadena cad) {
@@ -114,7 +158,7 @@ TCadena intercambiar(TLocalizador loc1, TLocalizador loc2, TCadena cad) {
 }
 
 bool localizadorEnCadena(TLocalizador loc, TCadena cad) {
-  return false;
+  return true;
 }
 
 bool precedeEnCadena(TLocalizador loc1, TLocalizador loc2, TCadena cad) {
