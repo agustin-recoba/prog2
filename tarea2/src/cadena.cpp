@@ -31,12 +31,12 @@ TCadena crearCadena() {
 
 void liberarCadena(TCadena cad) {
   TLocalizador p = cad->final;
-  while (esLocalizador(p) && esLocalizador(p->anterior)) {
+  while (p != NULL && p->anterior != NULL) {
     p = p->anterior;
     liberarInfo(p->siguiente->dato);
     delete p->siguiente;
   }
-  if (esLocalizador(p)) {
+  if (p != NULL) {
     liberarInfo(p->dato);
     delete p;
   }
@@ -97,7 +97,7 @@ TCadena insertarAntes(TInfo i, TLocalizador loc, TCadena cad) {
   nuevo->dato = i;
   nuevo->siguiente = loc;
   nuevo->anterior = loc->anterior;
-  if (!esLocalizador(loc->anterior)) {
+  if (loc->anterior == NULL) {
     cad->inicio = nuevo;
   } else {
     loc->anterior->siguiente = nuevo;
@@ -107,12 +107,12 @@ TCadena insertarAntes(TInfo i, TLocalizador loc, TCadena cad) {
 }
 
 TCadena removerDeCadena(TLocalizador loc, TCadena cad) {
-  if (esLocalizador(loc->anterior)) {
+  if (loc->anterior != NULL) {
     loc->anterior->siguiente = loc->siguiente;
   } else {
     cad->inicio = loc->siguiente;
   }
-  if (esLocalizador(loc->siguiente)) {
+  if (loc->siguiente != NULL) {
     loc->siguiente->anterior = loc->anterior;
   } else {
     cad->final = loc->anterior;
@@ -124,26 +124,27 @@ TCadena removerDeCadena(TLocalizador loc, TCadena cad) {
 
 void imprimirCadena(TCadena cad) {
   TLocalizador p = cad->inicio;
-  while (esLocalizador(p)) {
+  while (p != NULL) {
     ArregloChars arr;
     arr = infoATexto(p->dato);
     printf("%s", arr);
     delete[] arr;
     p = siguiente(p, cad);
   }
-  if (!esLocalizador(p))
+  if (p == NULL)
     printf("\n");
   
 }
 
 TLocalizador kesimo(nat k, TCadena cad) {
 
-  if (k == 0 || esVaciaCadena(cad)) return NULL;
+  if (k == 0 || esVaciaCadena(cad)) 
+    return NULL;
 
   TLocalizador p = cad->inicio;
   nat i = 1;
 
-  while (esLocalizador(p) && i < k) {
+  while (p != NULL && i < k) {
     p = p->siguiente;
     i++;
   }
@@ -186,7 +187,7 @@ TCadena copiarSegmento(TLocalizador desde, TLocalizador hasta, TCadena cad) {
   aux->dato = copiaInfo(infoCadena(desde, cad));
   desde = desde->siguiente;
 
-  while (esLocalizador(desde) && desde->anterior != hasta) {
+  while (desde != NULL && desde->anterior != hasta) {
     aux->siguiente = new nodoCadena;
     aux->siguiente->anterior = aux;
     aux = aux->siguiente;
@@ -240,7 +241,7 @@ TCadena intercambiar(TLocalizador loc1, TLocalizador loc2, TCadena cad) {
 
 bool localizadorEnCadena(TLocalizador loc, TCadena cad) {
   TLocalizador p = cad->inicio;
-  while (esLocalizador(p) && p != loc) {
+  while (p != NULL && p != loc) {
     p = p->siguiente;
   }
   return p != NULL && p == loc;
@@ -251,7 +252,7 @@ bool precedeEnCadena(TLocalizador loc1, TLocalizador loc2, TCadena cad) {
     return false;
   else if (loc1 == loc2 && localizadorEnCadena(loc1, cad))
     return true;
-  while (esLocalizador(loc1) && loc1 != loc2) {
+  while (loc1 != NULL && loc1 != loc2) {
     loc1 = loc1->siguiente;
   }
   return loc1 == loc2;
@@ -261,7 +262,7 @@ TLocalizador siguienteClave(nat clave, TLocalizador loc, TCadena cad) {
   if (esVaciaCadena(cad)) {
     return NULL;
   } 
-  while(esLocalizador(loc) && natInfo(loc->dato) != clave)
+  while(loc != NULL && natInfo(loc->dato) != clave)
     loc = loc->siguiente;
   
   return loc;
@@ -271,7 +272,7 @@ TLocalizador anteriorClave(nat clave, TLocalizador loc, TCadena cad) {
   if (esVaciaCadena(cad)) {
     return NULL;
   } 
-  while(esLocalizador(loc) && natInfo(loc->dato) != clave)
+  while(loc != NULL && natInfo(loc->dato) != clave)
     loc = loc->anterior;
   
   return loc;
@@ -281,7 +282,7 @@ TLocalizador menorEnCadena(TLocalizador loc, TCadena cad) {
   nat min = natInfo(loc->dato);
   TLocalizador pMin = loc;
   loc = loc->siguiente;
-  while(esLocalizador(loc)) {
+  while(loc != NULL) {
     if (natInfo(loc->dato) < min) {
       min = natInfo(loc->dato);
       pMin = loc;
