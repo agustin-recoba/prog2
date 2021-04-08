@@ -1,3 +1,5 @@
+/* 5469187 */
+
 #include "../include/usoTads.h"
 
 bool pertenece(nat elem, TCadena cad) {
