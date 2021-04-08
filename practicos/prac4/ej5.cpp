@@ -160,3 +160,13 @@ bool esPrefijo (Lista l, AG ar){
         return false;
 }
 
+int max (int a, int b) {
+    return a > b ? a : b;
+}
+
+int mayorAmplitud(AG ar) {
+    if (ar == NULL) 
+        return 0;
+    else   
+        return max(mayorAmplitud(ar->pH), 1 + mayorAmplitud(ar->sH)); 
+}
