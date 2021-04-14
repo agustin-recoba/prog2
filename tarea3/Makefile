@@ -1,6 +1,6 @@
 
 # --------------------------------------------------------------------
-#  Makefile de tarea 2.
+#  Makefile de tarea 3.
 
 #  Laboratorio de Programación 2.
 #  InCo-FIng-UDELAR
@@ -30,7 +30,7 @@ all: principal
 # Objetivos que no son archivos.
 .PHONY: all clean_bin clean_test clean testing entrega
 
-MODULOS = utils info cadena usoTads
+MODULOS = utils info cadena binario iterador usoTads
 
 # directorios
 HDIR    = include
@@ -90,9 +90,6 @@ $(EJECUTABLE):$(ODIR)/$(PRINCIPAL).o $(OS)
 	@printf 'Compilando y enlazando $(@) \n'; \
 	$(LD) $(CCFLAGS) $^ -o $@
 
-# casos de prueba
-CASOS = 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 A B C D E F
-
 
 # cadena de archivos, con directorio y extensión
 INS=$(CASOS:%=$(TESTDIR)/%.in)
@@ -109,6 +106,13 @@ $(TESTDIR)/%.sal:$(TESTDIR)/%.in
 		echo "tamaño excedido" > $@;\
 	fi
 
+# test de tiempo
+# para estos test puede ser conveniente agregar -DNDEBUG en la variable CCFLAGS
+$(TESTDIR)/t-ultimos.sal:$(TESTDIR)/t-ultimos.in
+	-timeout 10 ./$(EJECUTABLE) < $< > $@ 2>&1
+$(TESTDIR)/t-avl.sal:$(TESTDIR)/t-avl.in
+	-timeout 10 ./$(EJECUTABLE) < $< > $@ 2>&1
+
 
 %.diff:Makefile
 # cada .diff depende de su .out y de su .sal
@@ -123,23 +127,8 @@ $(TESTDIR)/%.sal:$(TESTDIR)/%.in
 # el estado de la salida no es 0 y en ese caso se imprime el mensaje.
 
 
-
-
-# Test general. Las dependencias son los .diff.
-# Con `find` se encuentran los .diff de tamaño > 0 que están en el directorio
-# $(TESTDIR) y lo asigna a $(LST_ERR).
-# Si el tamaño de $(LST_ERR) no es cero imprime los casos con error.
-# Con `sed` se elimina el nombre de directorio y la extensión.
-testing:all $(DIFFS)
-	@LST_ERR=$$(find $(TESTDIR) -name *.diff* -size +0c -print);             \
-	if [ -n "$${LST_ERR}" ];                                                \
-	then                                                                    \
-		echo -- CASOS CON ERRORES --;                                   \
-		echo "$${LST_ERR}" | sed -e 's/$(TESTDIR)\///g' -e 's/.diff//g';\
-	fi
-
 # Genera el entregable.
-ENTREGA=Entrega2.tar.gz
+ENTREGA=Entrega3.tar.gz
 CPPS_ENTREGA = cadena.cpp usoTads.cpp
 entrega:
 	@rm -f $(ENTREGA)
@@ -150,7 +139,7 @@ entrega:
 
 # borra binarios
 clean_bin:
-	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS) $(LIB)
+	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS)
 
 # borra resultados de ejecución y comparación
 clean_test:
@@ -159,14 +148,3 @@ clean_test:
 # borra binarios, resultados de ejecución y comparación, y copias de respaldo
 clean:clean_test clean_bin
 	@rm -f *~ $(HDIR)/*~ $(CPPDIR)/*~ $(TESTDIR)/*~
-
-
-
-check-syntax:
-	gcc -o nul -S ${CHK_SOURCES}
-	
-	
-LIB = tarea.a
-$(LIB):	$(ODIR)/utils.o $(ODIR)/info.o $(ODIR)/$(PRINCIPAL).o
-	ar -qc $@ $^	
-	

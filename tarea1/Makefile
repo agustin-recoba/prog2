@@ -86,7 +86,7 @@ $(EJECUTABLE): $(ODIR)/$(PRINCIPAL).o $(OS)
 
 
 # casos de prueba
-CASOS = esVaciaPila apilar cima desapilar esVaciaCola encolar frente desencolar esClave asociar valor desasociar
+CASOS = esVaciaPila apilar cima desapilar esVaciaCola encolar frente desencolar esClave asociar valor desasociar 01 02 03
 
 # cadena de archivos, con directorio y extensión
 INS=$(CASOS:%=$(TESTDIR)/%.in)
@@ -143,7 +143,7 @@ entrega:
 
 # borra binarios
 clean_bin:
-	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS)
+	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS) $(LIB)
 
 # borra resultados de ejecución y comparación
 clean_test:
@@ -156,3 +156,8 @@ clean:clean_test clean_bin
 
 check-syntax:
 	gcc -o nul -S ${CHK_SOURCES}
+	
+	
+LIB = tarea.a
+$(LIB):	$(ODIR)/lista.o $(ODIR)/$(PRINCIPAL).o
+	ar -qc $@ $^
