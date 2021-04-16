@@ -127,9 +127,10 @@ $(TESTDIR)/t-avl.sal:$(TESTDIR)/t-avl.in
 # el estado de la salida no es 0 y en ese caso se imprime el mensaje.
 
 
+
 # Genera el entregable.
 ENTREGA=Entrega3.tar.gz
-CPPS_ENTREGA = cadena.cpp usoTads.cpp
+CPPS_ENTREGA = cadena binario iterador usoTads
 entrega:
 	@rm -f $(ENTREGA)
 	tar zcvf $(ENTREGA) -C src $(CPPS_ENTREGA)
@@ -148,3 +149,5 @@ clean_test:
 # borra binarios, resultados de ejecución y comparación, y copias de respaldo
 clean:clean_test clean_bin
 	@rm -f *~ $(HDIR)/*~ $(CPPDIR)/*~ $(TESTDIR)/*~
+
+
