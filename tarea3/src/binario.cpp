@@ -32,9 +32,32 @@ TInfo mayor(TBinario b) {
         b = b->der;
     return b->elem;
 }
+// Misma especificacion que mayor
+TInfo menor(TBinario b) {
+    while(b->izq != NULL)
+        b = b->izq;
+    return b->elem;
+}
 
 TBinario removerMayor(TBinario b){
-    
+    if(b->der == NULL) {
+        TBinario aux = b;
+        b = b->izq;
+        delete aux;
+    } else {
+        b->der = removerMayor(b->der);
+    }
+    return b;
+}
+
+TBinario removerMenor(TBinario b){
+    if(b->izq == NULL) {
+        TBinario aux = b;
+        b = b->der;
+        delete aux;
+    } else {
+        b->izq = removerMayor(b->izq);
+    }
     return b;
 }
 
@@ -67,7 +90,15 @@ TBinario derecho(TBinario b) {
 }
 
 TBinario buscarSubarbol(nat elem, TBinario b) {
-    return b;
+    if(b == NULL) {
+        return NULL;
+    } else if (natInfo(b->elem) == elem) {
+        return b;
+    } else if (natInfo(b->elem) > elem) {
+        return buscarSubarbol(elem, b->izq);
+    } else {
+        return buscarSubarbol(elem, b->der);
+    }
 }
 
 nat alturaBinario(TBinario b){
