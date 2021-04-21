@@ -28,7 +28,7 @@
 all: principal
 
 # Objetivos que no son archivos.
-.PHONY: all clean_bin clean_test clean testing entrega
+.PHONY: all clean_bin clean_test clean entrega
 
 MODULOS = utils info cadena binario iterador usoTads
 
@@ -90,6 +90,9 @@ $(EJECUTABLE):$(ODIR)/$(PRINCIPAL).o $(OS)
 	@printf 'Compilando y enlazando $(@) \n'; \
 	$(LD) $(CCFLAGS) $^ -o $@
 
+# casos de prueba
+CASOS = 01 02 03 04 05 06 07 08 09 10 11 12 200 A B C D t-ultimos t-avl
+
 
 # cadena de archivos, con directorio y extensión
 INS=$(CASOS:%=$(TESTDIR)/%.in)
@@ -127,15 +130,15 @@ $(TESTDIR)/t-avl.sal:$(TESTDIR)/t-avl.in
 # el estado de la salida no es 0 y en ese caso se imprime el mensaje.
 
 
-
 # Genera el entregable.
 ENTREGA=Entrega3.tar.gz
-CPPS_ENTREGA = cadena binario iterador usoTads
+CPPS_ENTREGA = cadena.cpp binario.cpp iterador.cpp usoTads.cpp
 entrega:
 	@rm -f $(ENTREGA)
 	tar zcvf $(ENTREGA) -C src $(CPPS_ENTREGA)
 	@echo --        El directorio y archivo a entregar es:
 	@echo $$(pwd)/$(ENTREGA)
+	@shasum $(ENTREGA) > sha.txt
 
 
 # borra binarios
