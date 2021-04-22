@@ -18,7 +18,7 @@ TBinario crearBinario() {
 TBinario insertarEnBinario(TInfo i, TBinario b) {
     if(b == NULL) {
         b = new _rep_binario;
-        b->elem = copiaInfo(i);
+        b->elem = i;
         b->izq = b->der = NULL;
     } else if (natInfo(i) < natInfo(b->elem))
         b->izq = insertarEnBinario(i, b->izq);
@@ -32,12 +32,6 @@ TInfo mayor(TBinario b) {
         b = b->der;
     return b->elem;
 }
-// Misma especificacion que mayor
-TInfo menor(TBinario b) {
-    while(b->izq != NULL)
-        b = b->izq;
-    return b->elem;
-}
 
 TBinario removerMayor(TBinario b){
     if(b->der == NULL) {
@@ -48,33 +42,6 @@ TBinario removerMayor(TBinario b){
         b->der = removerMayor(b->der);
     }
     return b;
-}
-
-TBinario removerMenor(TBinario b){
-    if(b->izq == NULL) {
-        TBinario aux = b;
-        b = b->der;
-        delete aux;
-    } else {
-        b->izq = removerMayor(b->izq);
-    }
-    return b;
-}
-
-TBinario removerDeBinario(nat elem, TBinario b) {
-    return b;
-}
-
-void liberarBinario(TBinario b){
-
-}
-
-bool esVacioBinario(TBinario b){
-    return true;
-}
-
-bool esAvl(TBinario b){
-    return true;
 }
 
 TInfo raiz(TBinario b) {
@@ -99,6 +66,65 @@ TBinario buscarSubarbol(nat elem, TBinario b) {
     } else {
         return buscarSubarbol(elem, b->der);
     }
+}
+
+static TBinario AUXpadre(nat elem, TBinario b) {
+    if (b == NULL)
+        return NULL;
+    else if ((b->der != NULL && elem == natInfo(b->der->elem)) || b->izq != NULL && elem == natInfo(b->izq->elem))
+        return b;
+    else if (elem > natInfo(b->elem))
+        return AUXpadre(elem, b->der);
+    else if (elem < natInfo(b->elem))
+        return AUXpadre(elem, b->izq);
+}
+
+TBinario removerDeBinario(nat elem, TBinario b) {
+    if (natInfo(b->elem) == elem) {
+        if ()
+    } else {
+        // ubico al padre del nodo que contiene a elem
+        TBinario padre = AUXpadre(elem, b);
+
+        // me paro en el nodo que contiene a elem
+        TBinario arElem = elem < natInfo(padre->elem) ? padre->izq : padre->der;
+
+        if (arElem->der != NULL && arElem->izq != NULL) { //ambas ramas no nulas
+            TInfo maxIzq = mayor(arElem->izq);
+            arElem->izq = removerMayor(arElem->izq);
+            liberarInfo(arElem->elem);
+            arElem->elem = maxIzq;
+        } else {
+            TBinario aux = arElem->der == NULL ? (arElem->izq == NULL ? NULL : arElem->izq) : arElem->der;
+            if (natInfo(padre->elem) > elem) {
+                liberarInfo(padre->izq->elem);
+                delete padre->izq;
+                padre->izq = aux;
+            } else {
+                liberarInfo(padre->der->elem);
+                delete padre->der;
+                padre->der = aux;
+            }
+        }
+    }
+    return b;
+}
+
+void liberarBinario(TBinario b){
+    if (b != NULL) {
+        liberarBinario(b->izq);
+        liberarBinario(b->der);
+        liberarInfo(b->elem);
+        delete b;
+    }
+}
+
+bool esVacioBinario(TBinario b){
+    return b == NULL;
+}
+
+bool esAvl(TBinario b){
+    return true;
 }
 
 nat alturaBinario(TBinario b){

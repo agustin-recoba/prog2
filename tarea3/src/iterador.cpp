@@ -19,10 +19,7 @@ struct _rep_iterador {
 };
 
 TIterador crearIterador() {
-    TIterador nuevo = new _rep_iterador;
-    nuevo->inicio = nuevo->fin = nuevo->actual = NULL;
-    nuevo->recorre = false;
-    return nuevo;
+    return NULL;
 }
 
 TIterador agregarAIterador(nat elem, TIterador iter){
