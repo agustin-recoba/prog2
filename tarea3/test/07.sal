@@ -1,0 +1,25 @@
+==2265== Invalid read of size 8
+==2265==    at 0x10BEFF: imprimirCadena(_rep_cadena*) (cadena.cpp:127)
+==2265==    by 0x10AECD: main (principal.cpp:389)
+==2265==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==2265== 
+==2265== 
+==2265== Process terminating with default action of signal 11 (SIGSEGV)
+==2265==  Access not within mapped region at address 0x0
+==2265==    at 0x10BEFF: imprimirCadena(_rep_cadena*) (cadena.cpp:127)
+==2265==    by 0x10AECD: main (principal.cpp:389)
+==2265==  If you believe this happened as a result of a stack
+==2265==  overflow in your program's main thread (unlikely but
+==2265==  possible), you can try to increase the size of the
+==2265==  main thread stack using the --main-stacksize= flag.
+==2265==  The main thread stack size used in this run was 8388608.
+1>#  Prueba nivelEnBinario y esCamino.
+2>Insertado.
+3>Insertado.
+4>Insertado.
+5>Insertado.
+6>Insertado.
+7>Insertado.
+8>Insertado.
+9>l = 0.
+10>Segmentation fault

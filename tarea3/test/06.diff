@@ -1,0 +1,62 @@
+0a1,15
+> ==2253== Invalid read of size 8
+> ==2253==    at 0x10BEFF: imprimirCadena(_rep_cadena*) (cadena.cpp:127)
+> ==2253==    by 0x109F10: main (principal.cpp:231)
+> ==2253==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+> ==2253== 
+> ==2253== 
+> ==2253== Process terminating with default action of signal 11 (SIGSEGV)
+> ==2253==  Access not within mapped region at address 0x0
+> ==2253==    at 0x10BEFF: imprimirCadena(_rep_cadena*) (cadena.cpp:127)
+> ==2253==    by 0x109F10: main (principal.cpp:231)
+> ==2253==  If you believe this happened as a result of a stack
+> ==2253==  overflow in your program's main thread (unlikely but
+> ==2253==  possible), you can try to increase the size of the
+> ==2253==  main thread stack using the --main-stacksize= flag.
+> ==2253==  The main thread stack size used in this run was 8388608.
+9,51c24
+< 9>
+< --(28,28.28)
+< -(24,24.24)
+< --(20,20.20)
+< (16,16.16)
+< --(12,12.12)
+< -(8,8.80)
+< --(4,4.40)
+< 10>(4,4.40)(8,8.80)(12,12.12)(16,16.16)(20,20.20)(24,24.24)(28,28.28)
+< 11>
+< --(28,28.28)
+< -(24,24.24)
+< --(20,20.20)
+< (16,16.16)
+< --(12,12.12)
+< -(8,8.80)
+< --(4,4.40)
+< 12>
+< 13>
+< -(12,12.12)
+< (8,8.80)
+< -(4,4.40)
+< 14>
+< (16,16.16)
+< --(12,12.12)
+< -(8,8.80)
+< --(4,4.40)
+< 15>72.72
+< 16>Insertado.
+< 17>
+< --(28,28.28)
+< -(24,24.24)
+< ---(22,-22.22)
+< --(20,20.20)
+< (16,16.16)
+< --(12,12.12)
+< -(8,8.80)
+< --(4,4.40)
+< 18>72.72
+< 19>114.20
+< 20>114.20
+< 21>0.00
+< 22>Fin.
+---
+> 9>10>Segmentation fault

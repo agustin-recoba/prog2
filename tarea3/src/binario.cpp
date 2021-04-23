@@ -71,17 +71,29 @@ TBinario buscarSubarbol(nat elem, TBinario b) {
 static TBinario AUXpadre(nat elem, TBinario b) {
     if (b == NULL)
         return NULL;
-    else if ((b->der != NULL && elem == natInfo(b->der->elem)) || b->izq != NULL && elem == natInfo(b->izq->elem))
+    else if ((b->der != NULL && elem == natInfo(b->der->elem)) || (b->izq != NULL && elem == natInfo(b->izq->elem)))
         return b;
     else if (elem > natInfo(b->elem))
         return AUXpadre(elem, b->der);
-    else if (elem < natInfo(b->elem))
+    else
         return AUXpadre(elem, b->izq);
 }
 
 TBinario removerDeBinario(nat elem, TBinario b) {
     if (natInfo(b->elem) == elem) {
-        if ()
+        
+        if(b->der != NULL && b->izq != NULL) {
+            TInfo maxIzq = mayor(b->izq);
+            b->izq = removerMayor(b->izq);
+            liberarInfo(b->elem);
+            b->elem = maxIzq;
+        } else {
+            TBinario aux = b->izq == NULL ? (b->der == NULL ? NULL : b->izq) : b->der;
+            liberarInfo(b->elem);
+            delete b;
+            return aux;
+        }
+
     } else {
         // ubico al padre del nodo que contiene a elem
         TBinario padre = AUXpadre(elem, b);
@@ -127,12 +139,22 @@ bool esAvl(TBinario b){
     return true;
 }
 
+static nat AUXmax (nat a, nat b) {
+    return a < b ? b : a;
+}
+
 nat alturaBinario(TBinario b){
-    return 1;
+    if (b == NULL) 
+        return 0;
+    else
+        return 1 + AUXmax(alturaBinario(b->der), alturaBinario(b->izq));
 }
 
 nat cantidadBinario(TBinario b) {
-    return 2;
+    if (b == NULL) 
+        return 0;
+    else
+        return 1 + cantidadBinario(b->izq) + cantidadBinario(b->der);
 }
 
 double sumaUltimosPositivos(nat i, TBinario b){
@@ -148,5 +170,9 @@ TBinario menores(double cota, TBinario b) {
 }
 
 void imprimirBinario(TBinario b) {
-
+    if (b != NULL) {
+        imprimirBinario(b->izq);
+        //nodo
+        imprimirBinario(b->der);
+    }
 }

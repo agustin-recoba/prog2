@@ -1,0 +1,10 @@
+principal: principal.cpp:139: int main(): Assertion `estaDefinidaActual(it)' failed.
+1>#  implementar las operaciones de iterador.
+2>Actual de it NO está definida.
+3>Agregando.
+4>Agregando.
+5>Agregando.
+6>Agregando.
+7>Reiniciado.
+8>Actual de it NO está definida.
+9>Aborted

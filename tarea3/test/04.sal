@@ -1,0 +1,24 @@
+principal: principal.cpp:169: int main(): Assertion `!esVacioBinario(buscarSubarbol(elem, b))' failed.
+1>#  Prueba de mayor, removerMayor, removerDeBinario.
+2>Insertado.
+3>Insertado.
+4>Insertado.
+5>Insertado.
+6>Insertado.
+7>8>(12,12.12)
+9>Removido el mayor.
+10>(11,11.11)
+11>12>(10,10.10)
+13>(11,11.11)
+14>(9,9.90)
+15>Removido.
+16>17>Removido el mayor.
+18>19>Removido.
+20>==2225== 40 (24 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 3 of 3
+==2225==    at 0x483BE63: operator new(unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2225==    by 0x10CDBB: insertarEnBinario(_rep_info*, _rep_binario*) (binario.cpp:20)
+==2225==    by 0x10CE28: insertarEnBinario(_rep_info*, _rep_binario*) (binario.cpp:24)
+==2225==    by 0x10CE28: insertarEnBinario(_rep_info*, _rep_binario*) (binario.cpp:24)
+==2225==    by 0x10982D: main (principal.cpp:151)
+==2225== 
+Aborted
