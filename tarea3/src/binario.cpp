@@ -57,15 +57,14 @@ TBinario derecho(TBinario b) {
 }
 
 TBinario buscarSubarbol(nat elem, TBinario b) {
-    if(b == NULL) {
+    if(b == NULL) 
         return NULL;
-    } else if (natInfo(b->elem) == elem) {
+    else if (natInfo(b->elem) == elem) 
         return b;
-    } else if (natInfo(b->elem) > elem) {
+    else if (natInfo(b->elem) > elem) 
         return buscarSubarbol(elem, b->izq);
-    } else {
+    else
         return buscarSubarbol(elem, b->der);
-    }
 }
 
 static TBinario AUXpadre(nat elem, TBinario b) {
@@ -88,7 +87,7 @@ TBinario removerDeBinario(nat elem, TBinario b) {
             liberarInfo(b->elem);
             b->elem = maxIzq;
         } else {
-            TBinario aux = b->izq == NULL ? (b->der == NULL ? NULL : b->izq) : b->der;
+            TBinario aux = b->izq == NULL ? (b->der == NULL ? NULL : b->der) : b->izq;
             liberarInfo(b->elem);
             delete b;
             return aux;
@@ -169,10 +168,20 @@ TBinario menores(double cota, TBinario b) {
     return b;
 }
 
-void imprimirBinario(TBinario b) {
+void AUXimprimirBinario(TBinario b, nat alt) {
     if (b != NULL) {
-        imprimirBinario(b->izq);
-        //nodo
-        imprimirBinario(b->der);
+        AUXimprimirBinario(b->der, alt+1);
+        char* frase = infoATexto(b->elem);
+        for (nat i = 0; i < alt; i++) 
+            printf("-");        
+        printf("%s\n", frase);
+        AUXimprimirBinario(b->izq, alt+1);
+        delete[] frase;
     }
+}
+
+void imprimirBinario(TBinario b) {
+    printf("\n");
+    AUXimprimirBinario(b, 0);
+    
 }
