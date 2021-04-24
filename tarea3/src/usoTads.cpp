@@ -26,20 +26,23 @@ TCadena nivelEnBinario(nat l, TBinario b){
 static bool AUXesCamino(TCadena cad, TLocalizador loc, TBinario b) {
     if (loc == NULL && b == NULL)
         return true;
-    else if (b != NULL && loc != NULL) {
-        bool iguales = natInfo(infoCadena(loc, cad)) == natInfo(raiz(b));
-        bool hojaYfin = izquierdo(b) == NULL && derecho(b) == NULL && siguiente(loc, cad);
-
-        bool hijos = AUXesCamino(cad, siguiente(loc, cad), izquierdo(b));
-        hijos = hijos || AUXesCamino(cad, siguiente(loc, cad), derecho(b));
-
-        return (iguales && hojaYfin) || (iguales && hijos);
+    else if (loc != NULL && b != NULL) {
+        nat list = natInfo(infoCadena(loc, cad));
+        nat arr = natInfo(raiz(b));
+        if (arr == list) {
+            if (izquierdo(b) == NULL)
+                return AUXesCamino(cad, siguiente(loc, cad), derecho(b));
+            else if (derecho(b) == NULL)
+                return AUXesCamino(cad, siguiente(loc, cad), izquierdo(b));
+            else return AUXesCamino(cad, siguiente(loc, cad), derecho(b)) || AUXesCamino(cad, siguiente(loc, cad), izquierdo(b));
+        } else
+            return false;
     } else 
         return false;
 }
 
 bool esCamino(TCadena cad, TBinario b) {
-    return AUXesCamino(cad, inicioCadena(cad), b);
+    return (cad == NULL && b == NULL) || AUXesCamino(cad, inicioCadena(cad), b);
 }
 
 bool pertenece(nat elem, TCadena cad) {
