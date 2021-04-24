@@ -10,7 +10,7 @@
 typedef struct rep_nodoNat *listaNat;
 struct rep_nodoNat {
     nat info;
-    listaNat sig;
+    listaNat prev, sig;
 };
 
 struct _rep_iterador {
@@ -23,26 +23,64 @@ TIterador crearIterador() {
 }
 
 TIterador agregarAIterador(nat elem, TIterador iter){
-
+    if (iter != NULL && iter->recorre) {
+        listaNat nuevoNodo = new rep_nodoNat;
+        nuevoNodo->info = elem;
+        nuevoNodo->sig = NULL;
+        nuevoNodo->prev = iter->fin;
+        iter->fin->sig = nuevoNodo;
+        iter->fin = nuevoNodo;
+        iter->actual = NULL;
+    } else if (iter == NULL) {
+        listaNat nuevoNodo = new rep_nodoNat;
+        nuevoNodo->info = elem;
+        nuevoNodo->info = elem;
+        nuevoNodo->sig = NULL;
+        nuevoNodo->prev = NULL;
+        iter = new _rep_iterador;        
+        iter->inicio = nuevoNodo;
+        iter->fin = nuevoNodo;
+        iter->actual = NULL;
+        iter->recorre = true;
+    }
     return iter;
 }
 
 TIterador reiniciarIterador(TIterador iter){
-    return NULL;
+    if(iter != NULL) {
+        iter->recorre = false;
+        iter->actual = iter->inicio;
+    } else {
+        iter = new _rep_iterador;
+        iter->actual = iter->inicio = iter->fin = NULL;
+        iter->recorre = false;
+    }
+    return iter;
 }
 
 TIterador avanzarIterador(TIterador iter) {
-    return NULL;
+    iter->actual = iter->actual == NULL ? NULL : iter->actual->sig;
+    return iter;
 }
 
 nat actualEnIterador(TIterador iter) {
-    return 1;
+    return iter->actual->info;
 }
 
 bool estaDefinidaActual(TIterador iter){
-    return false;
+    return iter != NULL && iter->actual != NULL;
 }
 
 void liberarIterador(TIterador iter) {
-
+    if (iter != NULL) {
+        listaNat l = iter->inicio;
+        listaNat aux;
+        while (l != NULL) {
+            aux = l;
+            l = l->sig;
+            delete aux;
+        }
+        delete iter;
+    }
+    
 }

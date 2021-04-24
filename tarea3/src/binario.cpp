@@ -134,12 +134,40 @@ bool esVacioBinario(TBinario b){
     return b == NULL;
 }
 
-bool esAvl(TBinario b){
-    return true;
+static nat AUXabs(int a) {
+    return a < 0 ? -a : a;
 }
 
 static nat AUXmax (nat a, nat b) {
     return a < b ? b : a;
+}
+
+static bool AUXavl(TBinario b, nat *profNodo) { 
+    if (b == NULL)
+        return true;
+    else {
+        nat *profI = new nat;
+        nat *profD = new nat;
+        *profI = *profD = 0;
+
+        bool avlIzq = AUXavl(b->izq, profI);
+        bool avlDer = AUXavl(b->der, profD);
+        
+        bool esAVL = (avlDer && avlIzq) && (AUXabs(*profD - *profI) < 2);
+        *profNodo = 1 + AUXmax(*profD, *profI);
+
+        delete profD;
+        delete profI;        
+        return esAVL;
+    }
+}
+
+bool esAvl(TBinario b){
+    nat * alt = new nat;
+    *alt = 0;
+    bool res = AUXavl(b, alt);
+    delete alt;
+    return res;
 }
 
 nat alturaBinario(TBinario b){
@@ -156,16 +184,66 @@ nat cantidadBinario(TBinario b) {
         return 1 + cantidadBinario(b->izq) + cantidadBinario(b->der);
 }
 
+static double AUXsumaUltimosPositivos(nat i, TBinario b, nat &contador) {
+    if (b == NULL)
+        return 0.0;
+    else{
+        double suma = i >= contador ? AUXsumaUltimosPositivos(i, b->der, contador) : 0.0;
+
+        if (realInfo(b->elem) > 0)
+            suma += i >= contador++ ? realInfo(b->elem) : 0.0;
+
+        suma += i >= contador ?AUXsumaUltimosPositivos(i, b->izq, contador) : 0.0;
+        return suma;
+    }
+}
+
 double sumaUltimosPositivos(nat i, TBinario b){
-    return 0.0;
+    nat cont = 1;
+    return AUXsumaUltimosPositivos(i, b, cont);
+}
+
+static void AUXlinealizacion(TBinario b, TCadena &cad) {
+    if (b != NULL) {
+        AUXlinealizacion(b->izq, cad);
+        insertarAlFinal(copiaInfo(b->elem), cad);
+        AUXlinealizacion(b->der, cad);
+    }
 }
 
 TCadena linealizacion(TBinario b) {
-    return NULL;
+    TCadena res = crearCadena();
+    AUXlinealizacion(b, res);
+    return res;
 }
 
 TBinario menores(double cota, TBinario b) {
-    return b;
+    TBinario nuevo;
+    if (b == NULL)
+        nuevo = NULL;
+    else {
+        TBinario nIzq = menores(cota, b->izq);
+        TBinario nDer = menores(cota, b->der);
+        if (realInfo(b->elem) < cota) {
+            nuevo = new _rep_binario;
+            nuevo->elem = copiaInfo(b->elem);
+            nuevo->izq = nIzq;
+            nuevo->der = nDer;
+        } else if (nIzq != NULL && nDer != NULL) {
+            TInfo maxIzq = mayor(nIzq);
+            nIzq = removerMayor(nIzq);
+            nuevo = new _rep_binario;
+            nuevo->izq = nIzq;
+            nuevo->der = nDer;
+            nuevo->elem = maxIzq;
+        } else if (nIzq != NULL && nDer == NULL)
+            nuevo = nIzq;
+        else if (nIzq == NULL && nDer != NULL) 
+            nuevo = nDer;
+        else 
+            nuevo = NULL;
+    }
+    return nuevo;
 }
 
 void AUXimprimirBinario(TBinario b, nat alt) {

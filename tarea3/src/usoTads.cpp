@@ -6,15 +6,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static void AUXnivelEnBinario(nat l, TBinario b, nat act, TCadena &cad) {
+    if (b != NULL) {
+        if (l == act) {
+            cad = insertarAlFinal(copiaInfo(raiz(b)), cad);
+        } else if (l > act) {
+            AUXnivelEnBinario(l, izquierdo(b), act+1, cad);
+            AUXnivelEnBinario(l, derecho(b), act+1, cad);
+        }
+    }
+}
+
 TCadena nivelEnBinario(nat l, TBinario b){
-    return NULL;
+    TCadena cad = crearCadena();
+    AUXnivelEnBinario(l, b, 1, cad);
+    return cad;
 }
 
-bool esCamino(TCadena c, TBinario b) {
-    return false;
+static bool AUXesCamino(TCadena cad, TLocalizador loc, TBinario b) {
+    if (loc == NULL && b == NULL)
+        return true;
+    else if (b != NULL && loc != NULL) {
+        bool iguales = natInfo(infoCadena(loc, cad)) == natInfo(raiz(b));
+        bool hojaYfin = izquierdo(b) == NULL && derecho(b) == NULL && siguiente(loc, cad);
+
+        bool hijos = AUXesCamino(cad, siguiente(loc, cad), izquierdo(b));
+        hijos = hijos || AUXesCamino(cad, siguiente(loc, cad), derecho(b));
+
+        return (iguales && hojaYfin) || (iguales && hijos);
+    } else 
+        return false;
 }
 
-
+bool esCamino(TCadena cad, TBinario b) {
+    return AUXesCamino(cad, inicioCadena(cad), b);
+}
 
 bool pertenece(nat elem, TCadena cad) {
     return esLocalizador(siguienteClave(elem, inicioCadena(cad), cad));
