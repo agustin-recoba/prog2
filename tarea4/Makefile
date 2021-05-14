@@ -173,7 +173,7 @@ entrega:
 
 # borra binarios
 clean_bin:
-	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS) $(LIB)
+	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS)
 
 # borra resultados de ejecución y comparación
 clean_test:
@@ -182,7 +182,6 @@ clean_test:
 # borra binarios, resultados de ejecución y comparación, y copias de respaldo
 clean:clean_test clean_bin
 	@rm -f *~ $(HDIR)/*~ $(CPPDIR)/*~ $(TESTDIR)/*~
-
 
 
 

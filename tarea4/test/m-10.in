@@ -12,9 +12,10 @@ linealizacion
 recorridaPorNiveles
 enAlguno 5 1 3 7 8 9
 soloEnA 5 1 3 7 8 9
-agregarAIterador 5
-agregarAIterador 2
+reiniciar
 agregarAIterador 1
+agregarAIterador 2
+agregarAIterador 5
 agregarAIterador 8
 enAlguno 5 1 3 7 8 9
 soloEnA 5 1 3 7 8 9

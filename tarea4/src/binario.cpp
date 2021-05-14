@@ -14,11 +14,15 @@ struct _rep_binario {
 static TBinario BinarioBalanceadoAUX(ArregloNats elems, int indInf, int indSup) {
     if (indSup < indInf)
         return NULL;
-    else {
+    else if (indInf == indSup) {
+        TBinario nodo = new _rep_binario;
+        nodo->elem = crearInfo(elems[indInf], 0.0);
+        nodo->izq = nodo->der = NULL;
+        return nodo;
+    } else {
         TBinario nodo = new _rep_binario;
         int medio = (indInf + indSup) / 2;
-        TInfo dato = crearInfo(elems[medio], 0.0);
-        nodo->elem = dato;
+        nodo->elem = crearInfo(elems[medio], 0.0);
         nodo->izq = BinarioBalanceadoAUX(elems, indInf, medio - 1);
         nodo->der = BinarioBalanceadoAUX(elems, medio + 1, indSup);
         return nodo;
