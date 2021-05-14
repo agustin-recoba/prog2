@@ -1,10 +1,13 @@
 /* 5469187 */
 
 #include "../include/usoTads.h"
+#include "../include/colaBinarios.h"
+#include "../include/pila.h"
 
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 nat cantidadEnIterador(TIterador it) {
     it = reiniciarIterador(it);
@@ -109,7 +112,44 @@ TIterador soloEnA(TIterador a, TIterador b) {
 }
 
 TIterador recorridaPorNiveles(TBinario b) {
-    return NULL;
+    TPila pila = crearPila(cantidadBinario(b));
+
+    TColaBinarios cola = crearColaBinarios();
+
+    if (b != NULL)
+        cola = encolar(b, cola);
+    while (!estaVaciaColaBinarios(cola)) {
+        TBinario t = frente(cola);
+        pila = apilar(natInfo(raiz(t)), pila);
+        cola = desencolar(cola);
+
+        if (derecho(t) != NULL)
+            cola = encolar(derecho(t), cola);
+        if (izquierdo(t) != NULL)
+            cola = encolar(izquierdo(t), cola);
+    }
+
+    liberarColaBinarios(cola);
+    
+    int ultimoAgr = -1;
+
+    
+    TIterador nuevo = crearIterador();
+
+    while (!estaVaciaPila(pila)) {
+        nat porAgre = cima(pila);
+        if ((int) porAgre > ultimoAgr + 1) {
+            nuevo = agregarAIterador(porAgre, nuevo);
+        } else {
+            nuevo = agregarAIterador(UINT_MAX, nuevo);
+            nuevo = agregarAIterador(porAgre, nuevo);
+        }
+        ultimoAgr = porAgre;
+        pila = desapilar(pila);
+    }
+    liberarPila(pila);
+
+    return nuevo;
 }
 
 static void AUXnivelEnBinario(nat l, TBinario b, nat act, TCadena &cad) {
