@@ -112,39 +112,42 @@ TIterador soloEnA(TIterador a, TIterador b) {
 }
 
 TIterador recorridaPorNiveles(TBinario b) {
-    TPila pila = crearPila(cantidadBinario(b));
+    TPila pila = crearPila(cantidadBinario(b)*2 + 1);
 
-    TColaBinarios cola = crearColaBinarios();
+    TColaBinarios colaActual = crearColaBinarios();
+    TColaBinarios colaSig = crearColaBinarios();
 
     if (b != NULL)
-        cola = encolar(b, cola);
-    while (!estaVaciaColaBinarios(cola)) {
-        TBinario t = frente(cola);
-        pila = apilar(natInfo(raiz(t)), pila);
-        cola = desencolar(cola);
+        colaActual = encolar(b, colaActual);
+    while (!estaVaciaColaBinarios(colaActual)) { // sale cuando la colaActual y colaSig estan vacias
+        TBinario nodoActual = frente(colaActual);
+        colaActual = desencolar(colaActual);
+        pila = apilar(natInfo(raiz(nodoActual)), pila);
 
-        if (derecho(t) != NULL)
-            cola = encolar(derecho(t), cola);
-        if (izquierdo(t) != NULL)
-            cola = encolar(izquierdo(t), cola);
+        if (derecho(nodoActual) != NULL)
+            colaSig = encolar(derecho(nodoActual), colaSig);
+        if (izquierdo(nodoActual) != NULL)
+            colaSig = encolar(izquierdo(nodoActual), colaSig);
+        
+        if (estaVaciaColaBinarios(colaActual)) {  //colaActual queda vacia cada vez que se termina un nivel
+            if (!estaVaciaColaBinarios(colaSig))  //agrego separador cada vez que termino un nivel, excepto en el ultimo
+                pila = apilar(UINT_MAX, pila);
+            TColaBinarios swap = colaSig;
+            colaSig = colaActual;
+            colaActual = swap;
+        }
+
     }
 
-    liberarColaBinarios(cola);
+    liberarColaBinarios(colaActual);
+    liberarColaBinarios(colaSig);
     
-    int ultimoAgr = -1;
-
     
     TIterador nuevo = crearIterador();
 
     while (!estaVaciaPila(pila)) {
         nat porAgre = cima(pila);
-        if ((int) porAgre > ultimoAgr + 1) {
-            nuevo = agregarAIterador(porAgre, nuevo);
-        } else {
-            nuevo = agregarAIterador(UINT_MAX, nuevo);
-            nuevo = agregarAIterador(porAgre, nuevo);
-        }
-        ultimoAgr = porAgre;
+        nuevo = agregarAIterador(porAgre, nuevo);
         pila = desapilar(pila);
     }
     liberarPila(pila);
