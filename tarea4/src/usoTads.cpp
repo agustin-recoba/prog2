@@ -112,7 +112,7 @@ TIterador soloEnA(TIterador a, TIterador b) {
 }
 
 TIterador recorridaPorNiveles(TBinario b) {
-    TPila pila = crearPila(cantidadBinario(b)*2 + 1);
+    TPila pila = crearPila(cantidadBinario(b)*2 + 1); //cantidad de nodos + separadores maxima, en caso de arbol degenerado
 
     TColaBinarios colaActual = crearColaBinarios();
     TColaBinarios colaSig = crearColaBinarios();
