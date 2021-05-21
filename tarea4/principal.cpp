@@ -1,5 +1,5 @@
 /*
-  Módulo principal de la tarea 3.
+  Módulo principal de la tarea 4.
 
 Intérprete de comandos para probar los módulos.
 

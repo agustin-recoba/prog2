@@ -1,6 +1,6 @@
 
 # --------------------------------------------------------------------
-#  Makefile de tarea 3.
+#  Makefile de tarea 4.
 
 #  Laboratorio de Programación 2.
 #  InCo-FIng-UDELAR
@@ -159,6 +159,18 @@ t-t-%:$(TESTDIR)/t-%.in $(TESTDIR)/t-%.out
 
 
 
+# Test general. Las dependencias son los .diff.
+# Con `find` se encuentran los .diff de tamaño > 0 que están en el directorio
+# $(TESTDIR) y lo asigna a $(LST_ERR).
+# Si el tamaño de $(LST_ERR) no es cero imprime los casos con error.
+# Con `sed` se elimina el nombre de directorio y la extensión.
+testing:all $(DIFFS)
+	@LST_ERR=$$(find $(TESTDIR) -name *.diff* -size +0c -print);             \
+	if [ -n "$${LST_ERR}" ];                                                \
+	then                                                                    \
+		echo -- CASOS CON ERRORES --;                                   \
+		echo "$${LST_ERR}" | sed -e 's/$(TESTDIR)\///g' -e 's/.diff//g';\
+	fi
 
 # Genera el entregable.
 ENTREGA=Entrega4.tar.gz
@@ -173,7 +185,7 @@ entrega:
 
 # borra binarios
 clean_bin:
-	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS)
+	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS) $(LIB)
 
 # borra resultados de ejecución y comparación
 clean_test:
@@ -185,3 +197,11 @@ clean:clean_test clean_bin
 
 
 
+check-syntax:
+	gcc -o nul -S ${CHK_SOURCES}
+	
+	
+LIB = tarea.a
+$(LIB):	$(ODIR)/utils.o $(ODIR)/info.o $(ODIR)/$(PRINCIPAL).o
+	ar -qc $@ $^	
+	
