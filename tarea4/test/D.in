@@ -1,0 +1,32 @@
+insertarEnBinario (20,0)
+recorridaPorNiveles
+insertarEnBinario (5,0)
+insertarEnBinario (2,0)
+insertarEnBinario (7,0)
+insertarEnBinario (8,0)
+insertarEnBinario (9,0)
+insertarEnBinario (10,0)
+agregarAIterador 30
+agregarAIterador 40
+agregarAIterador 50
+agregarAIterador 60
+agregarAIterador 70
+agregarAIterador 80
+cantidadEnIterador
+estaVaciaPila
+apilar 20
+estaVaciaPila
+apilar 30
+desapilar
+cima
+encolar 10
+frente
+desencolar
+enAlguno 3 35 45 85
+soloEnA 4 35 45 50 85
+cantidadEnIterador
+estaVaciaPila
+estaLlenaPila
+recorridaPorNiveles
+estaVaciaColaBinarios
+Fin

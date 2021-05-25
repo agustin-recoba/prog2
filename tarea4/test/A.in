@@ -1,0 +1,21 @@
+agregarAIterador 3
+agregarAIterador 5
+agregarAIterador 7
+cantidadEnIterador
+apilar 5
+apilar 5
+apilar 5
+cima
+desapilar 
+cima
+cantidadEnIterador
+binarioBalanceado 16 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+imprimirBinario
+soloEnA 0
+cantidadEnIterador
+enAlguno 5 1 2 6 7 8
+cantidadEnIterador
+estaVaciaPila
+estaLlenaPila
+recorridaPorNiveles
+Fin

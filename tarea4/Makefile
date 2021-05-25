@@ -47,10 +47,10 @@ LD = g++ # gcc
 
 # opciones de compilación
 # para que los assert tengan efecto 
-CCFLAGS = -Wall -Werror -I$(HDIR) -g
+#CCFLAGS = -Wall -Werror -I$(HDIR) -g
 
 # para que los assert NO tengan efecto y no impacten en el tiempo de ejecución
-#CCFLAGS = -Wall -Werror -I$(HDIR) -g -DNDEBUG
+CCFLAGS = -Wall -Werror -I$(HDIR) -g -DNDEBUG
 
 
 
@@ -94,7 +94,7 @@ $(EJECUTABLE):$(ODIR)/$(PRINCIPAL).o $(OS)
 	$(LD) $(CCFLAGS) $^ -o $@
 
 # casos de prueba
-CASOS = 01 02 03 04 05 06 07 300 m-10 t-binario_balanceado t-recorrida_por_niveles
+CASOS = 01 02 03 04 05 06 07 300 m-10 t-binario_balanceado t-recorrida_por_niveles A B C D E
 
 
 # cadena de archivos, con directorio y extensión

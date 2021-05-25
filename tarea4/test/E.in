@@ -1,0 +1,17 @@
+binarioBalanceado 10 10 11 12 13 14 15 16 17 18 19
+imprimirBinario
+apilar 7
+apilar 6
+apilar 5
+cima
+desapilar 
+cima
+estaVaciaPila
+estaLlenaPila
+recorridaPorNiveles
+encolar 20
+encolar 11
+frente
+desencolar
+frente
+Fin

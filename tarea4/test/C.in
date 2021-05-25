@@ -1,0 +1,35 @@
+binarioBalanceado 9 8 9 10 11 12 13 14 15 16
+estaLlenaPila
+apilar 5
+cima
+desapilar 
+estaVaciaPila
+apilar 5
+apilar 5
+apilar 5
+apilar 5
+apilar 5
+apilar 5
+apilar 5
+apilar 5
+apilar 5
+apilar 50
+estaLlenaPila
+cima
+imprimirBinario
+encolar 11
+encolar 12
+encolar 10
+frente
+desencolar
+frente
+agregarAIterador 10
+agregarAIterador 20
+agregarAIterador 30
+cantidadEnIterador
+cantidadEnIterador
+soloEnA 1 20
+enAlguno 1 20
+desapilar 
+cima
+Fin

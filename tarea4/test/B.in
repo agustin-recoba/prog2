@@ -1,0 +1,30 @@
+agregarAIterador 5
+agregarAIterador 6
+agregarAIterador 7
+soloEnA 5 1 2 6 7 8
+soloEnA 5 1 5 6 8 9
+cantidadEnIterador
+binarioBalanceado 14 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+imprimirBinario
+encolar 20
+encolar 11
+encolar 11
+encolar 11
+frente
+desencolar
+frente
+encolar 20
+desencolar
+frente
+enAlguno 0
+reiniciar
+binarioBalanceado 1 100
+recorridaPorNiveles
+insertarEnBinario (50,0)
+insertarEnBinario (70,0)
+insertarEnBinario (60,0)
+recorridaPorNiveles
+cantidadEnIterador
+soloEnA 0
+estaVaciaColaBinarios
+Fin
