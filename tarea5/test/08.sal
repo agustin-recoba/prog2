@@ -1,0 +1,51 @@
+1>#  Prueba de unión, diferencia e intersección entre conjuntos vacíos y singleton .
+2>#  vacío - vacío.
+3>Union.
+4>No hay elementos en el conjunto.
+5>Diferencia.
+6>No hay elementos en el conjunto.
+7>Intersección.
+8>No hay elementos en el conjunto.
+9>#  vacío - singleton.
+10>Diferencia.
+11>No hay elementos en el conjunto.
+12>Intersección.
+13>No hay elementos en el conjunto.
+14>Union.
+15>No hay elementos en el conjunto.
+16>#  singleton - vacío .
+17>Union.
+18>No hay elementos en el conjunto.
+19>Diferencia.
+20>No hay elementos en el conjunto.
+21>Intersección.
+22>No hay elementos en el conjunto.
+23>#  para volver a tener un singleton.
+24>Union.
+25>#  singleton - singleton.
+26>Union.
+27>No hay elementos en el conjunto.
+28>Diferencia.
+29>No hay elementos en el conjunto.
+30>Intersección.
+31>No hay elementos en el conjunto.
+32>Diferencia.
+33>No hay elementos en el conjunto.
+34>Union.
+35>Intersección.
+36>No hay elementos en el conjunto.
+37>Union.
+38>Union.
+39>No hay elementos en el conjunto.
+40>#  para volver a tener un singleton.
+41>Intersección.
+42>No hay elementos en el conjunto.
+43>Diferencia.
+44>No hay elementos en el conjunto.
+45>Intersección.
+46>No hay elementos en el conjunto.
+47>#  para volver a tener un singleton.
+48>Union.
+49>Union.
+50>No hay elementos en el conjunto.
+51>Fin.

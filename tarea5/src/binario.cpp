@@ -12,7 +12,15 @@ struct _rep_binario {
 };
 
 TBinario avlABinario(TAvl a) {
-    return NULL;
+    if (estaVacioAvl(a))
+        return NULL;
+    else {
+        TBinario nuevo = new _rep_binario;
+        nuevo->elem = crearInfo(raizAvl(a), 0.0);
+        nuevo->izq = avlABinario(izqAvl(a));
+        nuevo->der = avlABinario(derAvl(a));
+        return nuevo;
+    }
 }
 
 static TBinario BinarioBalanceadoAUX(ArregloNats elems, int indInf, int indSup) {
