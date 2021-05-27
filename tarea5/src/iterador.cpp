@@ -78,5 +78,5 @@ void liberarIterador(TIterador iter) {
         }
         delete iter;
     }
-    
+    iter = NULL;    
 }

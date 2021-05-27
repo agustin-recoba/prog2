@@ -24,31 +24,39 @@ TConjunto singleton(nat elem) {
     return nuevo;
 }
 
+/* Devuelve un TConjunto con los elementos de iter
+   pre: iter es creciente estricto */
+static TConjunto iterAConjunto(TIterador iter) {
+    int n = cantidadEnIterador(iter);
+    if (n > 0) {
+        iter = reiniciarIterador(iter);
+        nat* elems = new nat[n];
+
+        for (int i = 0; i < n; i++) {
+            elems[i] = actualEnIterador(iter);
+            iter = avanzarIterador(iter);
+        }
+
+        TConjunto sal = arregloAConjunto(elems, n);
+        delete[] elems;
+        return sal;
+    } else
+        return NULL;    
+}
+
 TConjunto unionDeConjuntos(TConjunto c1, TConjunto c2) {
     TIterador it1 = iteradorDeConjunto(c1);
     TIterador it2 = iteradorDeConjunto(c2);
     
     TIterador unionI = enAlguno(it1, it2);
-    int largoU = cantidadEnIterador(unionI);
-
-    unionI = reiniciarIterador(unionI);
+    TConjunto nuevo = iterAConjunto(unionI);
     
-    ArregloNats unionC = new nat[largoU];
-    for (int i = 0; i <largoU; i++) {
-        unionC[i] = actualEnIterador(unionI);
-        unionI = avanzarIterador(unionI);
-    }
-
-    liberarIterador(it1);
-    liberarIterador(it2);
-    liberarIterador(unionI);
-
-    TConjunto nuevo = new _rep_conjunto;
-    nuevo->avl = arregloAAvl(unionC, largoU);
-    nuevo->min = unionC[0];
-    nuevo->max = unionC[largoU-1];
-
-    delete[] unionC;
+    if (it1 != NULL)
+        liberarIterador(it1);
+    if (it2 != NULL)
+        liberarIterador(it2);
+    if (unionI != NULL)
+        liberarIterador(unionI);
 
     return nuevo;
 }
@@ -57,36 +65,15 @@ TConjunto diferenciaDeConjuntos(TConjunto c1, TConjunto c2) {
     TIterador it1 = iteradorDeConjunto(c1);
     TIterador it2 = iteradorDeConjunto(c2);
 
-    it1 = reiniciarIterador(it1);
-    it2 = reiniciarIterador(it2);
+    TIterador diff = soloEnA(it1, it2);
+    TConjunto nuevo = iterAConjunto(diff);
 
-    if (!estaDefinidaActual(it1)){
+    if (it1 != NULL)
         liberarIterador(it1);
+    if (it2 != NULL)
         liberarIterador(it2);
-        return NULL;
-    }
-    
-    TIterador unionI = soloEnA(it1, it2);
-    int largoU = cantidadEnIterador(unionI);
-
-    unionI = reiniciarIterador(unionI);
-    
-    ArregloNats unionC = new nat[largoU];
-    for (int i = 0; i <largoU; i++) {
-        unionC[i] = actualEnIterador(unionI);
-        unionI = avanzarIterador(unionI);
-    }
-
-    liberarIterador(it1);
-    liberarIterador(it2);
-    liberarIterador(unionI);
-
-    TConjunto nuevo = new _rep_conjunto;
-    nuevo->avl = arregloAAvl(unionC, largoU);
-    nuevo->min = unionC[0];
-    nuevo->max = unionC[largoU-1];
-
-    delete[] unionC;
+    if (diff != NULL)
+        liberarIterador(diff);
 
     return nuevo;
 }
