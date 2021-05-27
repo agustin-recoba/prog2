@@ -10,7 +10,46 @@
 #include <limits.h>
 
 TConjunto interseccionDeConjuntos(TConjunto c1, TConjunto c2) {
-    return c1;
+    TIterador it1 = iteradorDeConjunto(c1);
+    TIterador it2 = iteradorDeConjunto(c2);
+
+    it1 = reiniciarIterador(it1);
+    it2 = reiniciarIterador(it2);
+
+    if (!estaDefinidaActual(it1) || !estaDefinidaActual(it2)){
+        liberarIterador(it1);
+        liberarIterador(it2);
+        return NULL;
+    }
+
+    TIterador unionI = enAlguno(it1, it2);
+    TIterador aMenosB = soloEnA(it1, it2);
+    TIterador bMenosA = soloEnA(it2, it1);
+
+    TIterador paso1 = soloEnA(unionI,aMenosB);
+    TIterador res = soloEnA(paso1, bMenosA);
+
+    int resLarg = cantidadEnIterador(res);
+    res = reiniciarIterador(res);
+
+    TConjunto sal = crearConjunto();
+    for (int i = 0; i <resLarg; i++) {
+        TConjunto aux = singleton(actualEnIterador(res));
+        sal = unionDeConjuntos(sal, aux);
+        liberarConjunto(aux);
+        res = avanzarIterador(res);
+    } 
+
+    //liberar est. usadas
+    liberarIterador(it1);
+    liberarIterador(it2);
+    liberarIterador(unionI);
+    liberarIterador(aMenosB);
+    liberarIterador(bMenosA);
+    liberarIterador(paso1);
+    liberarIterador(res);
+
+    return sal;
 }
 
 nat cantidadEnIterador(TIterador it) {

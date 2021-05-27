@@ -1,3 +1,35 @@
+==4446== Invalid read of size 4
+==4446==    at 0x1109F8: unionDeConjuntos(_rep_conjunto*, _rep_conjunto*) (conjunto.cpp:48)
+==4446==    by 0x10A204: main (principal.cpp:313)
+==4446==  Address 0x4dae260 is 0 bytes after a block of size 0 alloc'd
+==4446==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4446==    by 0x110955: unionDeConjuntos(_rep_conjunto*, _rep_conjunto*) (conjunto.cpp:36)
+==4446==    by 0x10A204: main (principal.cpp:313)
+==4446== 
+==4446== Invalid read of size 4
+==4446==    at 0x110A14: unionDeConjuntos(_rep_conjunto*, _rep_conjunto*) (conjunto.cpp:49)
+==4446==    by 0x10A204: main (principal.cpp:313)
+==4446==  Address 0x4dae25c is 4 bytes before a block of size 0 alloc'd
+==4446==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4446==    by 0x110955: unionDeConjuntos(_rep_conjunto*, _rep_conjunto*) (conjunto.cpp:36)
+==4446==    by 0x10A204: main (principal.cpp:313)
+==4446== 
+==4446== Invalid read of size 4
+==4446==    at 0x110B68: diferenciaDeConjuntos(_rep_conjunto*, _rep_conjunto*) (conjunto.cpp:77)
+==4446==    by 0x10A2E3: main (principal.cpp:328)
+==4446==  Address 0x4dae2f0 is 0 bytes after a block of size 0 alloc'd
+==4446==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4446==    by 0x110AC5: diferenciaDeConjuntos(_rep_conjunto*, _rep_conjunto*) (conjunto.cpp:65)
+==4446==    by 0x10A2E3: main (principal.cpp:328)
+==4446== 
+==4446== Invalid read of size 4
+==4446==    at 0x110B84: diferenciaDeConjuntos(_rep_conjunto*, _rep_conjunto*) (conjunto.cpp:78)
+==4446==    by 0x10A2E3: main (principal.cpp:328)
+==4446==  Address 0x4dae2ec is 4 bytes before a block of size 0 alloc'd
+==4446==    at 0x483C583: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==4446==    by 0x110AC5: diferenciaDeConjuntos(_rep_conjunto*, _rep_conjunto*) (conjunto.cpp:65)
+==4446==    by 0x10A2E3: main (principal.cpp:328)
+==4446== 
 1>#  Prueba de unión, diferencia e intersección entre conjuntos vacíos y singleton .
 2>#  vacío - vacío.
 3>Union.
@@ -12,23 +44,23 @@
 12>Intersección.
 13>No hay elementos en el conjunto.
 14>Union.
-15>No hay elementos en el conjunto.
+15>5 
 16>#  singleton - vacío .
 17>Union.
-18>No hay elementos en el conjunto.
+18>5 
 19>Diferencia.
-20>No hay elementos en el conjunto.
+20>5 
 21>Intersección.
 22>No hay elementos en el conjunto.
 23>#  para volver a tener un singleton.
 24>Union.
 25>#  singleton - singleton.
 26>Union.
-27>No hay elementos en el conjunto.
+27>6 
 28>Diferencia.
-29>No hay elementos en el conjunto.
+29>6 
 30>Intersección.
-31>No hay elementos en el conjunto.
+31>6 
 32>Diferencia.
 33>No hay elementos en el conjunto.
 34>Union.
@@ -36,16 +68,16 @@
 36>No hay elementos en el conjunto.
 37>Union.
 38>Union.
-39>No hay elementos en el conjunto.
+39>4 6 
 40>#  para volver a tener un singleton.
 41>Intersección.
-42>No hay elementos en el conjunto.
+42>6 
 43>Diferencia.
-44>No hay elementos en el conjunto.
+44>6 
 45>Intersección.
 46>No hay elementos en el conjunto.
 47>#  para volver a tener un singleton.
 48>Union.
 49>Union.
-50>No hay elementos en el conjunto.
+50>6 8 
 51>Fin.
