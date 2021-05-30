@@ -94,7 +94,7 @@ $(EJECUTABLE):$(ODIR)/$(PRINCIPAL).o $(OS)
 	$(LD) $(CCFLAGS) $^ -o $@
 
 # casos de prueba
-CASOS = 00 01 02 03 04 05 06 07 08 200 300 400 m-40 t-avlAbinario t-conjunto
+CASOS = A B C D E F 00 01 02 03 04 05 06 07 08 200 300 400 m-40 t-avlAbinario t-conjunto
 
 
 # cadena de archivos, con directorio y extensión
@@ -157,6 +157,18 @@ t-t-%:$(TESTDIR)/t-%.in $(TESTDIR)/t-%.out
 	fi;                                                       \
 	rm -f $@tmp
 
+# Test general. Las dependencias son los .diff.
+# Con `find` se encuentran los .diff de tamaño > 0 que están en el directorio
+# $(TESTDIR) y lo asigna a $(LST_ERR).
+# Si el tamaño de $(LST_ERR) no es cero imprime los casos con error.
+# Con `sed` se elimina el nombre de directorio y la extensión.
+testing:all $(DIFFS)
+	@LST_ERR=$$(find $(TESTDIR) -name *.diff* -size +0c -print);             \
+	if [ -n "$${LST_ERR}" ];                                                \
+	then                                                                    \
+		echo -- CASOS CON ERRORES --;                                   \
+		echo "$${LST_ERR}" | sed -e 's/$(TESTDIR)\///g' -e 's/.diff//g';\
+	fi
 
 
 # Genera el entregable.
@@ -172,7 +184,7 @@ entrega:
 
 # borra binarios
 clean_bin:
-	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS)
+	@rm -f $(EJECUTABLE) $(ODIR)/$(PRINCIPAL).o $(OS) $(LIB)
 
 # borra resultados de ejecución y comparación
 clean_test:
@@ -184,4 +196,10 @@ clean:clean_test clean_bin
 
 
 
-
+check-syntax:
+	gcc -o nul -S ${CHK_SOURCES}
+	
+	
+LIB = tarea.a
+$(LIB):	$(ODIR)/utils.o $(ODIR)/info.o $(ODIR)/$(PRINCIPAL).o
+	ar -qc $@ $^

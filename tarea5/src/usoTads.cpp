@@ -9,46 +9,68 @@
 #include <stdlib.h>
 #include <limits.h>
 
+/* Devuelve un TConjunto con los elementos de iter
+   pre: iter es creciente estricto */
+static TConjunto iterAConjunto(TIterador iter) {
+    int n = cantidadEnIterador(iter);
+    if (n > 0) {
+        iter = reiniciarIterador(iter);
+        nat* elems = new nat[n];
+
+        for (int i = 0; i < n; i++) {
+            elems[i] = actualEnIterador(iter);
+            iter = avanzarIterador(iter);
+        }
+
+        TConjunto sal = arregloAConjunto(elems, n);
+        delete[] elems;
+        return sal;
+    } else
+        return NULL;    
+}
+
 TConjunto interseccionDeConjuntos(TConjunto c1, TConjunto c2) {
-    TIterador it1 = iteradorDeConjunto(c1);
-    TIterador it2 = iteradorDeConjunto(c2);
+    TIterador a = iteradorDeConjunto(c1);
+    TIterador b = iteradorDeConjunto(c2);
 
-    it1 = reiniciarIterador(it1);
-    it2 = reiniciarIterador(it2);
+    a = reiniciarIterador(a);
+    b = reiniciarIterador(b);
 
-    if (!estaDefinidaActual(it1) || !estaDefinidaActual(it2)){
-        liberarIterador(it1);
-        liberarIterador(it2);
+    if (!estaDefinidaActual(a) || !estaDefinidaActual(b)) {
+        liberarIterador(a);
+        liberarIterador(b);
         return NULL;
     }
 
-    TIterador unionI = enAlguno(it1, it2);
-    TIterador aMenosB = soloEnA(it1, it2);
-    TIterador bMenosA = soloEnA(it2, it1);
+    TIterador nuevo = crearIterador();
 
-    TIterador paso1 = soloEnA(unionI,aMenosB);
-    TIterador res = soloEnA(paso1, bMenosA);
+    int actNuevo = -1;
 
-    int resLarg = cantidadEnIterador(res);
-    res = reiniciarIterador(res);
+    while (estaDefinidaActual(a) && estaDefinidaActual(b)) {
+        int actA = actualEnIterador(a);
+        int actB = actualEnIterador(b);
+        if (actA == actNuevo)
+            a = avanzarIterador(a);
+        else if (actB == actNuevo)
+            b = avanzarIterador(b);
+        else if (actA < actB)
+            a = avanzarIterador(a);
+        else if (actB < actA)
+            b = avanzarIterador(b);
+        else {
+            nuevo = agregarAIterador(actA, nuevo);
+            actNuevo = actA;
+            a = avanzarIterador(a);
+            b = avanzarIterador(b);
+        }
+    }
 
-    TConjunto sal = crearConjunto();
-    for (int i = 0; i <resLarg; i++) {
-        TConjunto aux = singleton(actualEnIterador(res));
-        sal = unionDeConjuntos(sal, aux);
-        liberarConjunto(aux);
-        res = avanzarIterador(res);
-    } 
+    TConjunto sal = iterAConjunto(nuevo);
 
-    //liberar est. usadas
-    liberarIterador(it1);
-    liberarIterador(it2);
-    liberarIterador(unionI);
-    liberarIterador(aMenosB);
-    liberarIterador(bMenosA);
-    liberarIterador(paso1);
-    liberarIterador(res);
-
+    liberarIterador(a);
+    liberarIterador(b);
+    liberarIterador(nuevo);
+    
     return sal;
 }
 
