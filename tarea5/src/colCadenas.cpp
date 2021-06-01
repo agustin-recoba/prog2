@@ -24,19 +24,24 @@ TColCadenas crearColCadenas(nat M) {
 }
 
 TColCadenas insertarEnColCadenas(TInfo info, nat pos, TColCadenas col) {
-    TCadena cad = col->cadenas[pos];
-    TLocalizador loc = inicioCadena(cad);
-    if (esLocalizador(loc))
-        cad = insertarAntes(info, inicioCadena(cad), cad);
-    else
-        cad = insertarAlFinal(info, cad);
-    col->cadenas[pos] = cad;
+    if (0 <= pos && pos < col->tam) {
+        TCadena cad = col->cadenas[pos];
+        TLocalizador loc = inicioCadena(cad);
+        if (esLocalizador(loc))
+            cad = insertarAntes(info, inicioCadena(cad), cad);
+        else
+            cad = insertarAlFinal(info, cad);
+        col->cadenas[pos] = cad;
+    }
 
     return col;
 }
 
 bool estaEnColCadenas(nat dato, nat pos, TColCadenas col) {
-    return pertenece(dato, col->cadenas[pos]);
+    if (0 <= pos && pos < col->tam)
+        return pertenece(dato, col->cadenas[pos]);
+    else
+        return false;
 }
 
 TInfo infoEnColCadenas(nat dato, nat pos, TColCadenas col) {
