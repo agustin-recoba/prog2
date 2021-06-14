@@ -984,14 +984,19 @@ int main() {
 
     } else if (0 == strcmp(nom_comando, "tiempo_cp")) {
       nat N = leerNat();
+      
       printf("\n prueba 1. \n");
+
       TColaDePrioridad a = crearCP(N);
       for (nat i = N; i >= 1; i--) {
         insertarEnCP(i, (double)i, a);
       }
+      
+
       for (nat i = 1; i <= N; i++)
         eliminarPrioritario(a);
       liberarCP(a);
+
 
       printf(" prueba 2. \n");
       a = crearCP(N);
