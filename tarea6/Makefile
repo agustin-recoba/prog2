@@ -94,7 +94,7 @@ $(EJECUTABLE):$(ODIR)/$(PRINCIPAL).o $(OS)
 	$(LD) $(CCFLAGS) $^ -o $@
 
 # casos de prueba
-CASOS = 00 01 02 03 04 05 06 07 200 300 400 500 t-cp t-grafo t-map
+CASOS = 00 01 02 03 04 05 06 07 200 300 400 500 t-cp t-grafo t-map A B C D E F
 
 
 # cadena de archivos, con directorio y extensión
