@@ -29,4 +29,7 @@
 # Executables
 *.exe
 *.app
-practicos/prac2/ej1
+
+# Tests outputs
+*.sal
+*.diff
