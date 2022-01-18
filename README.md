@@ -1,4 +1,4 @@
-#prog2 2021
+# prog2 2021
 
 Repositorio usado como backup de mi trabajo en las tareas de Progamación 2 durante mi cursada en el primer semestre de 2021. Las tareas son trabajos obligatorios e individuales que sirven para evaluar la comprensión de los temas dados. 
 
